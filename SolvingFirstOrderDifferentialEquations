@@ -1,0 +1,257 @@
+package in;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+
+public class App1 {
+	private JFrame frame;
+	private JTextField txtcYe;
+	private JTextField result;
+	private JTextField txtCoefficientY;
+	private JTextField txtCoefficientT;
+	private JTextField txtCoefficientY_1;
+	private JTextField txtFirstInterval;
+	private JTextField txtLastInterval;
+	private JTextField txtH;
+	private JTextField txtY;
+	private JTextField txtM;
+	private JTextField txtcT;
+	private JTextField txtcY;
+	private JTextField txtF;
+	private JTextField txtL;
+	private JTextField txth;
+	private JTextField txty0;
+	private JTextField txM;
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					App1 window = new App1();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public App1() {
+		initialize();
+	}
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(500, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		txtCoefficientY = new JTextField();
+		txtCoefficientY.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtCoefficientY.setEditable(false);
+		txtCoefficientY.setText("Coefficient Y'=");
+		txtCoefficientY.setBounds(0, 0, 116, 22);
+		frame.getContentPane().add(txtCoefficientY);
+		txtCoefficientY.setColumns(10);
+		
+		txtCoefficientT = new JTextField();
+		txtCoefficientT.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtCoefficientT.setEditable(false);
+		txtCoefficientT.setText("Coefficient T=");
+		txtCoefficientT.setBounds(0, 24, 116, 22);
+		frame.getContentPane().add(txtCoefficientT);
+		txtCoefficientT.setColumns(10);
+		
+		txtCoefficientY_1 = new JTextField();
+		txtCoefficientY_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtCoefficientY_1.setEditable(false);
+		txtCoefficientY_1.setText("Coefficient Y=");
+		txtCoefficientY_1.setBounds(0, 48, 116, 22);
+		frame.getContentPane().add(txtCoefficientY_1);
+		txtCoefficientY_1.setColumns(10);
+		
+		txtFirstInterval = new JTextField();
+		txtFirstInterval.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtFirstInterval.setEditable(false);
+		txtFirstInterval.setText("First Interval=");
+		txtFirstInterval.setBounds(0, 72, 116, 22);
+		frame.getContentPane().add(txtFirstInterval);
+		txtFirstInterval.setColumns(10);
+		
+		txtLastInterval = new JTextField();
+		txtLastInterval.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtLastInterval.setEditable(false);
+		txtLastInterval.setText("Last Interval=");
+		txtLastInterval.setBounds(0, 96, 116, 22);
+		frame.getContentPane().add(txtLastInterval);
+		txtLastInterval.setColumns(10);
+		
+		txtH = new JTextField();
+		txtH.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtH.setEditable(false);
+		txtH.setText("h=");
+		txtH.setBounds(0, 120, 116, 22);
+		frame.getContentPane().add(txtH);
+		txtH.setColumns(10);
+		
+		txtY = new JTextField();
+		txtY.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtY.setEditable(false);
+		txtY.setText("y(0)=");
+		txtY.setBounds(0, 144, 116, 22);
+		frame.getContentPane().add(txtY);
+		txtY.setColumns(10);
+		
+		txtM = new JTextField();
+		txtM.setEditable(false);
+		txtM.setHorizontalAlignment(SwingConstants.RIGHT);
+		txtM.setText("M=");
+		txtM.setBounds(0, 168, 116, 22);
+		frame.getContentPane().add(txtM);
+		txtM.setColumns(10);
+		
+		txtcYe = new JTextField();
+		txtcYe.setBounds(116, 0, 116, 22);
+		frame.getContentPane().add(txtcYe);
+		txtcYe.setColumns(10);
+		
+		txtcT = new JTextField();
+		txtcT.setBounds(116, 24, 116, 22);
+		frame.getContentPane().add(txtcT);
+		txtcT.setColumns(10);
+		
+		txtcY = new JTextField();
+		txtcY.setBounds(116, 48, 116, 22);
+		frame.getContentPane().add(txtcY);
+		txtcY.setColumns(10);
+		
+		txtF = new JTextField();
+		txtF.setBounds(116, 72, 116, 22);
+		frame.getContentPane().add(txtF);
+		txtF.setColumns(10);
+		
+		txtL = new JTextField();
+		txtL.setBounds(116, 96, 116, 22);
+		frame.getContentPane().add(txtL);
+		txtL.setColumns(10);
+		
+		txth = new JTextField();
+		txth.setBounds(116, 120, 116, 22);
+		frame.getContentPane().add(txth);
+		txth.setColumns(10);
+		
+		txty0 = new JTextField();
+		txty0.setBounds(116, 144, 116, 22);
+		frame.getContentPane().add(txty0);
+		txty0.setColumns(10);
+		
+		txM = new JTextField();
+		txM.setBounds(116, 168, 116, 22);
+		frame.getContentPane().add(txM);
+		txM.setColumns(10);
+		
+		JButton btnEuler = new JButton("Euler");
+		btnEuler.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionRecived.setText("Euler");
+			}
+		});
+		btnEuler.setBounds(288, -1, 110, 25);
+		frame.getContentPane().add(btnEuler);
+		
+		JButton btnHeun = new JButton("Heun");
+		btnHeun.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				actionRecived.setText("Heun");
+			}
+		});
+		btnHeun.setBounds(288, 47, 110, 25);
+		frame.getContentPane().add(btnHeun);
+		
+		JButton btnRengekutta = new JButton("Renge-Kutta");
+		btnRengekutta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				actionRecived.setText("Renge-Kutta");
+			}
+		});
+		btnRengekutta.setBounds(288, 95, 110, 25);
+		frame.getContentPane().add(btnRengekutta);
+		
+		actionRecived = new JLabel("action");
+		actionRecived.setHorizontalAlignment(SwingConstants.LEFT);
+		actionRecived.setBounds(0, 193, 116, 16);
+		frame.getContentPane().add(actionRecived);
+		
+		JButton btnStart = new JButton("Start");
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				double cYe=Double.parseDouble(txtcYe.getText());
+				double cT=Double.parseDouble(txtcT.getText());
+				double cY=Double.parseDouble(txtcY.getText());
+				double F=Double.parseDouble(txtF.getText());
+				double L=Double.parseDouble(txtL.getText());
+				double h=Double.parseDouble(txth.getText());
+				double y0=Double.parseDouble(txty0.getText());
+				int M = Integer.parseInt(txM.getText());
+				if(actionRecived.getText().equals("Euler")) {
+					double Y[]= new double [M+1];
+					Y[0]=y0;
+					
+					for(int i=1 ;i<=M ; i++) {
+						
+						Y[i]=(Y[i-1]+((cT*(F+(h*(i-1))))+cY*Y[i-1])*h)/cYe;
+						
+					}
+					result.setText(String.valueOf(Y[M]));
+				}
+				if(actionRecived.getText().equals("Heun")) {
+					double Y[]= new double [M+1];
+					Y[0]=y0;
+					double F1[]= new double [M+1];
+					double F2[]= new double [M+1];
+					
+					
+					for(int i=1 ;i<=M ; i++) {
+						F1[i-1]=(cT*F)+(cY*Y[i-1]);
+						F2[i-1]=cT*(F+(h*i))+cY*(Y[i-1]+F1[i-1]*h);
+						Y[i]=Y[i-1]+(h/2)*(F1[i-1]+F2[i-1]);	
+					}
+					result.setText(String.valueOf(Y[M]));
+				}
+				if(actionRecived.getText().equals("Renge-Kutta")) {
+					double Y[]= new double [M+1];
+					Y[0]=y0;
+					double K1[]= new double [M+1];
+					double K2[]= new double [M+1];
+					double K3[]= new double [M+1];
+					double K4[]= new double [M+1];
+					
+					for(int i=1 ;i<=M ; i++) {
+						
+						K1[i]=cT*(F+(h*(i-1)))+cY*Y[i-1];
+						K2[i]=cT*(F+(h*(i-1))+(h/2))+cY*(Y[i-1]+(h/2)*K1[i]);
+						K3[i]=cT*(F+(h*(i-1))+(h/2))+cY*(Y[i-1]+(h/2)*K2[i]);
+						K4[i]=cT*(F+(h*(i-1))+h)+cY*(Y[i-1]+h*K1[i]);
+						Y[i]=Y[i-1]+(K1[i]+2*K2[i]+2*K3[i]+K4[i])*(h/6);						
+					}
+					result.setText(String.valueOf(Y[M]));
+				}
+			}
+		});
+		btnStart.setBounds(288, 193, 110, 47);
+		frame.getContentPane().add(btnStart);
+		
+		result = new JTextField();
+		result.setBounds(0, 193, 232, 47);
+		frame.getContentPane().add(result);
+		result.setColumns(10);
+	}
+	private JLabel actionRecived;
+}
+
