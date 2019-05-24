@@ -1,0 +1,119 @@
+package Cözümler;
+
+public class eliptic {
+
+	public static void main(String[] args) {
+		double a,b,c,d;
+	      double w[][]= new double [101][101];
+		  double X[]= new double [101];
+		  double Y[]= new double [101];
+	      int n,m,i,j;
+	      a=1;
+		  b=2;
+		  c=0;
+		  d=1;
+	      n=3;
+		  m=3;
+	      PoissionEquation(w,X,Y,a,b,c,d,n,m);
+	      System.out.printf("\ni\tj\txi\t\tyj\t\twij\t\tuij\t\t|uij-wij|");
+	      System.out.printf("\n____________________________________________________________________________________________");
+	      for(i=1;i<n;i++)
+	          for(j=1;j<m;j++)
+	          {
+	        	   System.out.printf("\n");
+	               System.out.print(i);
+	               System.out.printf("\t");
+	               System.out.print(j);
+		           System.out.printf("\t%.6f",X[i]);
+		           System.out.printf("\t%.6f",Y[j]);
+		           System.out.printf("\t%.6f",w[i][j]);
+		  	       System.out.printf("\t%.6f",U(X[i],Y[j]));
+		  	       System.out.printf("\t%E",(Math.abs(w[i][j]-U(X[i],Y[j]))));
+		           System.out.printf("\n____________________________________________________________________________________________\n");
+	          }
+	      
+
+	}
+	static double Fxy(double x,double y)
+	{
+		return 0;
+	}
+	static double Uxc(double x)
+	{
+		return   2*Math.log(x);
+	}
+	static double Uxd(double x)
+	{
+		return Math.log((x*x)+1);
+	}
+	static double Uay(double y)
+	{
+		return Math.log((y*y)+1);
+	}
+	static double Uby(double y)
+	{
+		return Math.log((y*y)+4);
+	}
+	static double U(double x,double y)
+	{
+		return Math.log((y*y)+(x*x));
+	}
+	static void PoissionEquation(double w[][],double X[],double Y[],double a,double b, double c, double d, int n,int m)
+	{
+		double h,k,lamda,mu,z,norm;
+		int i,j,l;
+		h=(b-a)/n;
+		k=(d-c)/m;
+		for(i=1;i<n;i++) X[i]=a+i*h;
+		for(i=1;i<m;i++) Y[i]=c+i*k;
+		for(i=1;i<n;i++)
+		    for(j=1;j<m;j++) w[i][j]=0.;
+		lamda=h*h/(k*k);
+		mu=2*(1+lamda);
+		l=1;
+		while (l<=300)
+		{
+			z=(-Math.pow(h,2)*Fxy(X[1],Y[m-1])+Uay(Y[m-1])+lamda*Uxd(X[1])+lamda*w[1][m-2]+w[2][m-1])/mu;
+			norm=Math.abs(z-w[1][m-1]);
+			w[1][m-1]=z;
+			for(i=2;i<n-1;i++)
+			{
+				z=(-Math.pow(h,2)*Fxy(X[i],Y[m-1])+lamda*Uxd(X[i])+w[i-1][m-1]+w[i+1][m-1]+lamda*w[i][m-2])/mu;
+				if(Math.abs(w[i][m-1]-z)>norm) norm=Math.abs(w[i][m-1]-z);
+				w[i][m-1]=z;
+			}
+			z=(-Math.pow(h,2)*Fxy(X[n-1],Y[m-1])+Uby(Y[m-1])+lamda*Uxd(X[n-1])+w[n-2][m-1]+lamda*w[n-1][m-2])/mu;
+			if(Math.abs(w[n-1][m-1]-z)>norm) norm=Math.abs(w[n-1][m-1]-z);
+			w[n-1][m-1]=z;
+			for(j=m-2;j>1;j--)
+			{
+				z=(-Math.pow(h,2)*Fxy(X[1],Y[j])+Uay(Y[j])+lamda*w[1][j+1]+lamda*w[1][j-1]+w[2][j])/mu;
+				if(Math.abs(w[1][j]-z)>norm) norm=Math.abs(w[1][j]-z);
+				w[1][j]=z;
+				for(i=2;i<n-1;i++)
+				{
+					z=(-Math.pow(h,2)*Fxy(X[i],Y[j])+w[i-1][j]+lamda*w[i][j+1]+w[i+1][j]+lamda*w[i][j-1])/mu;
+					if(Math.abs(w[i][j]-z)>norm) norm=Math.abs(w[i][j]-z);
+					w[i][j]=z;
+				}
+				z=(-Math.pow(h,2)*Fxy(X[n-1],Y[j])+Uby(Y[j])+w[n-2][j]+lamda*w[n-1][j+1]+lamda*w[n-1][j-1])/mu;
+				if(Math.abs(w[n-1][j]-z)>norm) norm=Math.abs(w[n-1][j]-z);
+				w[n-1][j]=z;
+			}
+			z=(-Math.pow(h,2)*Fxy(X[1],Y[1])+Uay(Y[1])+lamda*Uxc(X[1])+lamda*w[1][2]+w[2][1])/mu;
+			if(Math.abs(w[1][1]-z)>norm) norm=Math.abs(w[1][1]-z);
+			w[1][1]=z;
+			for(i=2;i<n-1;i++)
+			{
+				z=(-Math.pow(h,2)*Fxy(X[i],Y[1])+lamda*Uxc(X[i])+w[i-1][1]+lamda*w[i][2]+w[i+1][1])/mu;
+				if(Math.abs(w[i][1]-z)>norm) norm=Math.abs(w[i][1]-z);
+				w[i][1]=z;
+			}
+			z=(-Math.pow(h,2)*Fxy(X[n-1],Y[1])+Uby(Y[1])+lamda*Uxc(X[n-1])+w[n-2][1]+lamda*w[n-1][2])/mu;
+			if(Math.abs(w[n-1][1]-z)>norm) norm=Math.abs(w[n-1][1]-z);
+			w[n-1][1]=z;
+			if(norm<Math.floor(1e-8)) return;
+			l++;
+		}
+	}
+}
