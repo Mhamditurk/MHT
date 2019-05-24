@@ -1,0 +1,90 @@
+package Cözümler;
+
+public class lineerShooting {
+
+	public static void main(String[] args) {
+		  double a,b,alfa,beta;
+	      double u[][]= new double [3][100];
+	      double v[][]= new double [3][100];
+	      
+	      double w10,w20,W1;
+	      double h,x;
+	      int n,i;
+	      a=0;
+		  b=Math.PI/2;
+		  n=4;
+		  alfa=-0.3;
+		  beta=-0.1;
+	      h=(b-a)/n;
+	      u[1][0]=alfa;
+	      u[2][0]=0;
+	      v[1][0]=0;
+	      v[2][0]=1;
+	      rungeKutta(u,v,a,h,n);
+	      w10=alfa;
+	      w20=(beta-u[1][n])/v[1][n];
+	      System.out.printf("xi\t\twi\t\tYi\t\t|wi-yi|");
+	      System.out.printf("\n__________________________________________________________________________________\n");
+	      System.out.printf("%.2f",a);
+	      System.out.printf("\t\t%.6f",w10);
+	      System.out.printf("\t%.6f",Y(a));
+	      System.out.printf("\t%E",Math.abs(Y(a)-u[1][0]));	 
+	      System.out.printf("\n__________________________________________________________________________________\n");
+	      for(i=1;i<=n;i++) {
+	    	  	W1=u[1][i]+w20*v[1][i];
+	          	x=a+i*h;
+	          	System.out.printf("\n%.2f",x);
+	          	System.out.printf("\t\t%.6f",W1);
+	  	      	System.out.printf("\t%.6f",Y(x));
+	  	      	System.out.printf("\t%E",Math.abs(W1-Y(x)));
+	          	System.out.printf("\n__________________________________________________________________________________\n");
+	      }
+
+	}
+static double Y(double x)
+	{
+		return -1./10*(Math.sin(x)+3*Math.cos(x));
+	}
+static double P(double x) {
+		
+		return 1;
+	}
+static double Q(double x) {
+		
+		return 2;
+	}
+static double R(double x) {
+		
+		return Math.cos(x);
+	}
+
+static void rungeKutta(double u[][],double v[][],double a,double h, int n) {
+	double k11,k12,k21,k22,k31,k32,k41,k42,z11,z12,z21,z22,z31,z32,z41,z42;
+    double x;
+    int i;
+	for(i=0;i<n;i++){
+		x=a+i*h;
+	    k11=h*u[2][i];
+	    k12=h*(P(x)*u[2][i]+Q(x)*u[1][i]+R(x));
+	    k21=h*(u[2][i]+0.5*k12);
+	    k22=h*(P(x+h/2)*(u[2][i]+0.5*k12)+Q(x+h/2)*(u[1][i]+0.5*k11)+R(x+h/2));
+	    k31=h*(u[2][i]+0.5*k22);
+	    k32=h*(P(x+h/2)*(u[2][i]+0.5*k22)+Q(x+h/2)*(u[1][i]+0.5*k21)+R(x+h/2));
+	    k41=h*(u[2][i]+k32);
+	    k42=h*(P(x+h)*(u[2][i]+k32)+Q(x+h)*(u[1][i]+k31)+R(x+h));
+	    u[1][i+1]=u[1][i]+1./6*(k11+2*k21+2*k31+k41);
+	    u[2][i+1]=u[2][i]+1./6*(k12+2*k22+2*k32+k42);
+	    z11=h*v[2][i];
+	    z12=h*(P(x)*v[2][i]+Q(x)*v[1][i]);
+	    z21=h*(v[2][i]+0.5*z12);
+	    z22=h*(P(x+h/2)*(v[2][i]+0.5*z12)+Q(x+h/2)*(v[1][i]+0.5*z11));
+	    z31=h*(v[2][i]+0.5*z22);
+	    z32=h*(P(x+h/2)*(v[2][i]+0.5*z22)+Q(x+h/2)*(v[1][i]+0.5*z21));
+	    z41=h*(v[2][i]+z32);
+	    z42=h*(P(x+h)*(v[2][i]+z32)+Q(x+h)*(v[1][i]+z31));
+	    v[1][i+1]=v[1][i]+1./6*(z11+2*z21+2*z31+z41);
+	    v[2][i+1]=v[2][i]+1./6*(z12+2*z22+2*z32+z42);
+	    }
+
+	}
+}
