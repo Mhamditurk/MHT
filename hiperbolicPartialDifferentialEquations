@@ -1,0 +1,76 @@
+package Cözümler;
+
+public class hiperbolik {
+
+	public static void main(String[] args) {
+		double T,a,alfa,t;
+	      int n,m;
+	      T=1;
+	      a=1;
+	      alfa=2;
+		  m=10;
+		  n=20;
+	      t=0.5;
+	      WaveEquation(a,T,alfa,n,m,t);
+	      System.out.printf("\n");
+
+	}
+	static double F(double x)
+	{
+		return  Math.sin(Math.PI*x);
+		
+	}
+	static double G(double x)
+	{
+		return 0;
+	}
+
+	static double U(double x,double t)
+	{
+		return Math.sin(Math.PI*x)*Math.cos(2*Math.PI*t);
+	}
+	static void WaveEquation(double a,double T,double alfa, int n,int m,double z)
+	{
+		double h,k,lamda,x,t;
+		double w[][]= new double [101][101];
+		int i,j;
+		h=a/m;
+		k=T/n;
+		lamda=k*alfa/h;
+		for(j=1;j<=n;j++) 
+		{
+			w[0][j]=0;w[m][j]=0;
+		}
+		w[0][0]=F(0);
+		w[m][0]=F(a);
+		for(i=1;i<=m-1;i++)
+		{
+			w[i][0]=F(i*h);
+	        w[i][1]=(1-lamda*lamda)*F(i*h)+lamda*lamda/2.*(F((i+1)*h)+F((i-1)*h))+k*G(i*h);		
+		}
+		for(j=1;j<=n-1;j++)
+		     for(i=1;i<=m-1;i++) w[i][j+1]=2*(1-lamda*lamda)*w[i][j]+lamda*lamda*(w[i+1][j]+w[i-1][j])-w[i][j-1];
+		
+		
+		for(j=0;j<=n;j++)
+		{
+			t=j*k;
+			j=(int) (t/k);
+		    if(Math.abs(t-z)<1e-5)
+		    {
+		        System.out.printf("\nxi\t\twij\t\tu(x,t)\t\t|wij-u|");
+		        System.out.printf("\n________________________________________________________________");
+				for(i=0;i<=m;i++)
+				{
+					x=i*h;
+					System.out.printf("\n%.2f",x);
+		          	System.out.printf("\t\t%.25f",w[i][j]);
+		  	      	System.out.printf("\t%.25f",U(x,t));
+		  	      	System.out.printf("\t%E",Math.abs(w[i][j]-U(x,t)));
+		          	System.out.printf("\n__________________________________________________________________________________\n");
+				}
+		    }
+			
+		}
+	}
+}
