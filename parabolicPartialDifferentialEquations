@@ -1,0 +1,77 @@
+package Cözümler;
+
+public class parabolic {
+
+	public static void main(String[] args) {
+		double T,a,alfa,t;
+		double w[]= new double [101];
+	    int n,m;
+        T=0.1;
+        a=2;
+        alfa=1;
+        m=20;
+   	  	n=100;
+	    t=0.05;
+	    //------------------------
+	    HeatEquation(w,a,T,alfa,n,m,t);
+	    System.out.printf("\n");
+
+	}
+	static double Ux(double x)
+	{
+		return Math.sin(Math.PI*x/2);
+	}
+	static double U(double x,double t)
+	{
+		return Math.exp(-Math.PI*Math.PI*t/4)*Math.sin(Math.PI*x/2);
+	}
+	static void HeatEquation(double w[],double a,double T,double alfa, int n,int m,double z)
+	{
+		double h,k,lamda,t,x;
+		double L[]= new double [101];
+		double u[]= new double [101];
+		double Z[]= new double [101];
+		int i,j;
+		h=a/m;
+		k=T/n;
+		lamda=Math.pow(alfa,2)*k/Math.pow(h,2);
+		for(i=1;i<m;i++) w[i]=Ux(i*h);
+		L[1]=1+2*lamda;
+		u[1]=-lamda/L[1];
+		for(i=2;i<m-1;i++)
+		{
+			L[i]=1+2*lamda+lamda*u[i-1];
+			u[i]=-lamda/L[i];
+		}
+		L[m-1]=1+2*lamda+lamda*u[m-2];
+		for(j=1;j<=n;j++)
+		{
+			t=j*k;
+			if(t>z) break;
+			Z[1]=w[1]/L[1];
+			for(i=2;i<m;i++)
+				Z[i]=(w[i]+lamda*Z[i-1])/L[i];
+			w[m-1]=Z[m-1];
+			for(i=m-2;i>0;i--)
+			       w[i]=Z[i]-u[i]*w[i+1];
+			
+			if(t==z)
+			{
+	            System.out.printf("\nxi\t\twi\t\tu(x,t)\t\t|wi-uxt|");
+				System.out.printf("\n__________________________________________________________________________________");		
+				for(i=0;i<=m;i++)
+			    {
+				    x=i*h;
+				    System.out.printf("\n%.2f",x);
+		          	System.out.printf("\t\t%.6f",w[i]);
+		  	      	System.out.printf("\t%.6f",U(x,t));
+		  	      	System.out.printf("\t%E",Math.abs(w[i]-U(x,t)));
+		          	System.out.printf("\n__________________________________________________________________________________\n");
+			    }
+		    }  
+		}
+			
+
+		
+	}
+}
